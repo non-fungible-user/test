@@ -1,0 +1,24 @@
+version: "3"
+services:
+  be:
+    stdin_open: true
+    build:
+      context: .
+      dockerfile: dockerfile
+    container_name: be
+    depends_on:
+      - db
+    env_file:
+      - .env
+    ports:
+      - ${API_PORT}:${API_PORT}
+    restart: always
+  db:
+    image: mongo
+    container_name: db_mongo
+    volumes:
+      - mongodata:/data/db
+    ports:
+      - "27017:27017"
+volumes:
+  mongodata: 
